@@ -13,3 +13,6 @@ The software for implementing RelPMDCCA at:
 https://github.com/theorod93/sCCA. For further details, please refer to Page 15 (Availability) of the manuscript.
 TCCA: https://github.com/rciszek/mdr_tcca
 SCCA: https://cran.r-project.org/web/packages/PMA/index.html
+
+% Please contact Jin Zhang(jinzhang@mail.nwpu.edu.cn) for any comments or questions.
+
