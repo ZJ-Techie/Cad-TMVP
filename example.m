@@ -64,24 +64,3 @@ fprintf('===================================\n');
 u.CadTMVP_mean = mean(u.CadTMVP, 2);
 v.CadTMVP_mean = mean(v.CadTMVP, 2);
 w.CadTMVP_mean = mean(w.CadTMVP, 2);
-
-%% results f_sel_top_K_features
-img_name = Data_common_Sbj.QT_ID(:,1);
-img_name = img_name{1,1}(:,:);
-myfontsize = 8;
-myFontSize = 10;
-% draw QT heatmap
-figure(1)
-ifontsize = 18;
-caxis_range = 0.3;
-colormap jet;
-caxis_range = 0.3;
-subplot(5, 1, 5)
-set(gca, 'Position', [0.1 0.12 0.8 0.15]);
-U_CadTMVP_ave = [u.CadTMVP_mean v.CadTMVP_mean w.CadTMVP_mean];
-imagesc(U_CadTMVP_ave');
-set(gca, 'XTick', [], 'YTick', [], 'TickLength', [0 0]);
-set(gca, 'YTick', [1 2 3], 'YTickLabel', {'AV45', 'FDG', 'VBM'}, 'YAxisLocation', 'left');
-ylabel('Proposed', 'FontName', 'Times New Roman', 'FontSize', ifontsize+3);
-caxis([-1 * caxis_range caxis_range]);
-colorbar('Ticks',[-0.1,0.1], 'Position', [0.91, 0.12, 0.012, 0.83],'FontSize', 20);
