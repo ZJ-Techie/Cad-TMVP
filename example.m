@@ -64,3 +64,9 @@ fprintf('===================================\n');
 u.CadTMVP_mean = mean(u.CadTMVP, 2);
 v.CadTMVP_mean = mean(v.CadTMVP, 2);
 w.CadTMVP_mean = mean(w.CadTMVP, 2);
+idx_selected1 = f_sel_top_K_features(abs(u.CadTMVP_mean), top_k_selected);
+idx_selected2 = f_sel_top_K_features(abs(v.CadTMVP_mean), top_k_selected);
+idx_selected3 = f_sel_top_K_features(abs(w.CadTMVP_mean), top_k_selected);
+
+
+
