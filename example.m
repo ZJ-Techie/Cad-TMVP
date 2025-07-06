@@ -67,6 +67,9 @@ w.CadTMVP_mean = mean(w.CadTMVP, 2);
 idx_selected1 = f_sel_top_K_features(abs(u.CadTMVP_mean), top_k_selected);
 idx_selected2 = f_sel_top_K_features(abs(v.CadTMVP_mean), top_k_selected);
 idx_selected3 = f_sel_top_K_features(abs(w.CadTMVP_mean), top_k_selected);
-
-
-
+snp_name = replace_(snp_name);
+protein_name = replace_(protein_name);
+imaging_name = replace_(imaging_name);
+topsnp = snp_name(idx_selected1);
+topprotein  = protein_name(idx_selected2);
+topimaging  = imaging_name(idx_selected3);
