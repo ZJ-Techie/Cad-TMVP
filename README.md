@@ -14,5 +14,5 @@ https://github.com/theorod93/sCCA. For further details, please refer to Page 15 
 TCCA: https://github.com/rciszek/mdr_tcca
 SCCA: https://cran.r-project.org/web/packages/PMA/index.html
 
-% Please contact Jin Zhang(jinzhang@mail.nwpu.edu.cn) for any comments or questions.
+% Please contact Jin Zhang (jinzhang@mail.nwpu.edu.cn) for any comments or questions.
 
