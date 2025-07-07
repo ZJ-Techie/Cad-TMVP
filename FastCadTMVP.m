@@ -17,12 +17,10 @@ X = getNormalization(X, 'normalize');
 Y = getNormalization(Y, 'normalize');
 Z = getNormalization(Z, 'normalize');
 
-% Calculate coverance within X  Y and Z
 XX = X'* X;
 YY = Y'* Y;
 ZZ = Z'* Z;
 
-% Calculate coverance between X and Y
 u0 = ones(p, 1);
 v0 = ones(q, 1);
 w0 = ones(r, 1);
@@ -40,11 +38,9 @@ w = w ./ scale;
 iu = 1; iv = 2; iw = 3;
 W{iu} = u; W{iv} = v; W{iw} = w;
 
-% set parameters
-lambda1 = opts.lambda1; % L1
-lambda2 = opts.lambda2; % L21
+lambda1 = opts.lambda1; 
+lambda2 = opts.lambda2; 
 
-% set stopping criteria
 max_Iter = 100;
 i = 0;
 tol = 1e-5;
@@ -103,14 +99,17 @@ while (i < max_Iter && tu > tol && tv > tol && tw > tol) % default 100 times of 
             sub_u = u(1 + (iu - 1) * block : end);
         end
         XX = X' * X;
-        % update D
+        % D1 = updateD(sub_u);
+        % D1 = diag(D1);
         D1 = updateD2(sub_u);
         D1 = diag(D1);
         pp = size(X, 2);
-        Gu = updateGraph2(pp,'FGL'); % fused
+        % dfglu = updateD(sub_u, 'FGL');
+        % DFGLu = diag(dfglu);
+        Gu = updateGraph2(pp,'FGL'); % FGL
         dfglu = updateD2(sub_u, Gu, 'FGL'); % calculate FGL gradient
         DFGLu = diag(dfglu);
-        % solve u
+        
         F1 = (omega12 + omega13) *XX + lambda1 * D1 + lambda2 * DFGLu;
         b1 = omega12 * X' * diag(Q) * Yall  * v + omega13 * X' * diag(Q) * Zall * w + alpha * X' * (DX - Yall * v - Zall * w);
         sub_u = F1 \ b1;
@@ -119,9 +118,8 @@ while (i < max_Iter && tu > tol && tv > tol && tw > tol) % default 100 times of 
     end
     % scale u
     u = ut./s1;
-%     Xu = Xall * u;
+%   Xu = Xall * u;
     
-  % update v
     % -------------------------------------
     nblock = ceil(q/block);
     vt = [];
@@ -136,25 +134,24 @@ while (i < max_Iter && tu > tol && tv > tol && tw > tol) % default 100 times of 
             sub_v = v(1 + (iv - 1) * block : end);
         end
         YY = Y' * Y;
-        % update D
+        
         D1 = updateD2(sub_v);
         D1 = diag(D1);
         qq = size(Y, 2);
         Gv = updateGraph2(qq,'GGL'); % GGL
         dgglv = updateD2(sub_v, Gv, 'GGL');% calculate GGL gradient
         DGGLv = diag(dgglv);
-        % solve v
+
         F2 = (omega12 + omega23) * YY + lambda1 * D1 + lambda2 * DGGLv;
         b2 =  omega12 * Y' * diag(Q) * Xall  * u +  omega23 * Y' * diag(Q) * Zall * w + alpha * Y' * (DX - Xall * u - Zall * w);
         sub_v = F2\b2;
         vt = [vt; sub_v];
         s1 = s1 + sub_v' * YY * sub_v;
     end
-    % scale v
-    v = vt./s1;
+    
+      v = vt./s1;
 %     Yv = Yall * v;
 
-    % update w
     % -------------------------------------
     nblock = ceil(r/block);
     wt = [];
@@ -169,14 +166,14 @@ while (i < max_Iter && tu > tol && tv > tol && tw > tol) % default 100 times of 
             sub_w = w(1 + (iw - 1) * block : end);
         end
         ZZ = Z' * Z;
-        % update D
+      
         D1 = updateD2(sub_w);
         D1 = diag(D1);
         rr = size(Z, 2);
         Gw = updateGraph2(rr, 'GGL'); % GGL
         dgglw = updateD2(sub_w, Gw, 'GGL');% calculate GGL gradient
         DGGLw = diag(dgglw);
-        % solve w
+        
         F3 = (omega13 + omega23) * ZZ + lambda1 * D1 + lambda2 * DGGLw;
         b3 = omega13 * Z' * diag(Q) * Xall  * u +  omega23 * Z' * diag(Q) * Yall * v + alpha * Z' * (DX - Xall * u - Yall * v);
         sub_w = F3\b3;
@@ -185,9 +182,8 @@ while (i < max_Iter && tu > tol && tv > tol && tw > tol) % default 100 times of 
     end
     % scale w
     w = wt./s1;
-%     Zw = Zall * w;
+%   Zw = Zall * w;
 
-    % update loss weights
     Xu = Xall * u; Yv = Yall * v; Zw = Zall * w;
     gamma = 2;    
     p_c12 =  abs(corr(Xu, Yv));
