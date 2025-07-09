@@ -10,7 +10,7 @@ https://cran.r-project.org/web/packages/PMA/index.html;
 The software for implementing adaSMCCA at:
 https://github.com/ZJ-Techie/Cad-TMVP (adaSMCCA, since the authors did not have open-source code, we have presented our reproduced code);
 The software for implementing RelPMDCCA at:
-https://github.com/theorod93/sCCA. For further details, please refer to Page 15 (Availability) of the manuscript.
+https://github.com/theorod93/sCCA. For further details, please refer to Page 14 (Availability) of the manuscript.
 TCCA: https://github.com/rciszek/mdr_tcca
 SCCA: https://cran.r-project.org/web/packages/PMA/index.html
 
